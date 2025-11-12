@@ -12,7 +12,7 @@
 
 /* textarea는 원래 여러 줄이므로 높이 강제 해제 가능 */
 .comment-input textarea[name="fields[message]"] {
-  height: auto;           /* PC에서 input과 높이 맞추고 싶으면 48px로 고정해도 됨 */
+  height:  48px;           /* PC에서 input과 높이 맞추고 싶으면 48px로 고정해도 됨 */
   min-height: 48px;       /* input과 기본 높이 맞춤 */
   resize: vertical;
 }
@@ -54,3 +54,4 @@
     min-height: 110px;
   }
 }
+
