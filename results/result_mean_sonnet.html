@@ -81,51 +81,39 @@
       font-weight: 500;
     }
 
-    .comment-section {
-      margin-top: 40px;
-      background-color: rgba(0,0,0,0.4);
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 900px;
-    }
-
-    .comment-section h3 {
-      text-align: left;
-      margin-bottom: 10px;
-      font-weight: 500;
-    }
-
-   .comment-input {
+  /* 입력 행 레이아웃 */
+.comment-input {
   display: flex;
   gap: 10px;
   align-items: center;
   margin-bottom: 20px;
 }
 
-/* 이름 칸 (짧게 고정폭) */
+/* 이름: 가로 레이아웃일 때만 고정폭 */
 .comment-input input[name="fields[name]"] {
-  flex: 1 1 160px;   /* 고정폭 160px */
+  width: 160px;        /* ← 고정폭 */
+  flex: 0 0 auto;      /* ← flex-basis가 높이로 변하지 않게 */
   padding: 10px;
   border-radius: 6px;
   border: none;
-  font-size: 1rem;
+  font-size: 16px;     /* iOS 자동줌 방지 */
   font-family: 'Hahmlet', serif;
 }
 
-/* 메시지 칸 (남은 공간 전부 차지) */
+/* 메시지: 남은 공간 채우기 */
 .comment-input textarea[name="fields[message]"] {
   flex: 1 1 auto;
   min-width: 0;
+  min-height: 44px;
   padding: 10px;
   border-radius: 6px;
   border: none;
-  font-size: 1rem;
+  font-size: 16px;     /* iOS 자동줌 방지 */
   resize: vertical;
   font-family: 'Hahmlet', serif;
 }
 
-/* 등록 버튼 고정 */
+/* 등록 버튼 */
 .comment-input button {
   flex: 0 0 auto;
   padding: 10px 16px;
@@ -138,14 +126,22 @@
   cursor: pointer;
 }
 
-/* 반응형 (모바일에서 세로정렬) */
+/* 📱 모바일: 세로 스택일 때 높이/폭 재설정 */
 @media (max-width: 520px) {
   .comment-input {
     flex-direction: column;
     align-items: stretch;
   }
-  .comment-input input,
-  .comment-input textarea,
+  .comment-input input[name="fields[name]"] {
+    /* 여기서가 핵심: 세로 스택에서는 flex-basis를 없애 높이가 커지는 걸 막음 */
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+  }
+  .comment-input textarea[name="fields[message]"] {
+    width: 100%;
+    min-height: 110px;  /* 손가락 입력 편하게 */
+  }
   .comment-input button {
     width: 100%;
   }
@@ -297,5 +293,6 @@
   </script>
 </body>
 </html>
+
 
 
