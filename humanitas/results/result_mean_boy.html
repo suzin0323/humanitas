@@ -201,14 +201,21 @@
       <h3>💬 “고통은 기억되어야만 의미가 되는가?”</h3>
     </div>
 
-    <div class="comment-section">
-      <h3>댓글</h3>
-      <div class="comment-input">
-        <input type="text" id="commentInput" placeholder="생각을 남겨보세요...">
-        <button onclick="addComment()">등록</button>
-      </div>
-      <div class="comment-list" id="commentList"></div>
+   <div class="comment-section">
+  <h3>댓글 남기기</h3>
+  <form 
+    action="https://api.staticman.net/v3/entry/github/suzin0323/humanitas/main/comments?access_token=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"
+    method="POST">
+    <input type="hidden" name="options[slug]" value="boy">
+    <input type="hidden" name="options[redirect]" value="https://suzin0323.github.io/humanitas/results/result_mean_boy.html">
+    <div class="comment-input">
+      <input type="text" name="fields[name]" placeholder="이름 (선택)">
+      <textarea name="fields[message]" placeholder="생각을 남겨보세요..." required></textarea>
+      <button type="submit">등록</button>
     </div>
+  </form>
+</div>
+
     <!-- ✅ 하단 버튼 -->
 <div class="footer-buttons">
   <button onclick="goHome()">🏠 홈으로</button>
@@ -271,3 +278,4 @@ async function sharePage() {
   </script>
 </body>
 </html>
+
