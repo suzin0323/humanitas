@@ -192,14 +192,22 @@
       <h3>💬 “인간은 결함을 드러낼 때 비로소 회복될 수 있는가”</h3>
     </div>
 
-    <div class="comment-section">
-      <h3>댓글</h3>
-      <div class="comment-input">
-        <input type="text" id="commentInput" placeholder="생각을 남겨보세요...">
-        <button onclick="addComment()">등록</button>
-      </div>
-      <div class="comment-list" id="commentList"></div>
+<!-- ✅ Staticman 댓글 (공중그네) -->
+<div class="comment-section">
+  <h3>댓글 남기기</h3>
+  <form 
+    action="https://api.staticman.net/v3/entry/github/sujin0323/humanitas/main/comments?access_token=ACCESS_TOKEN_HERE"
+    method="POST">
+    <input type="hidden" name="options[slug]" value="okuda">
+    <input type="hidden" name="options[redirect]" value="https://sujin0323.github.io/humanitas/results/result_heal_kangaroo.html">
+    <div class="comment-input">
+      <input type="text" name="fields[name]" placeholder="이름 (선택)">
+      <textarea name="fields[message]" placeholder="생각을 남겨보세요..." required></textarea>
+      <button type="submit">등록</button>
     </div>
+  </form>
+</div>
+
     <!-- ✅ 하단 버튼 -->
 <div class="footer-buttons">
   <button onclick="goHome()">🏠 홈으로</button>
@@ -262,3 +270,4 @@ async function sharePage() {
   </script>
 </body>
 </html>
+
