@@ -84,7 +84,9 @@ body {
   .comment-input{ flex-direction:column; align-items:stretch; }
   .comment-input input[name="fields[name]"]{ width:100%; height:auto; }
   .comment-input textarea[name="fields[message]"]{ width:100%; min-height:110px; }
-  .comment-input button{ width:100%; }
+  .comment-input button{ width:100% !important; 
+                        box-sizing: border-box;
+                       }
 }
 
 /* 하단 버튼 */
@@ -95,3 +97,4 @@ body {
   transition:all .2s;
 }
 .footer-buttons button:hover{ background:#f1f1f1; transform:translateY(-2px); }
+
