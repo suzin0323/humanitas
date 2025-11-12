@@ -1,19 +1,8 @@
-/* =========================================================
-   main.js — 독서 성향 테스트 (2지선다형 MBTI형, 개선판) [balanced]
-   ========================================================= */
-
-// 보기 선택
-function chooseAnswer(question, answer, nextPage) {
-  localStorage.setItem(question, answer);
-  window.location.href = nextPage;
-}
-
-// 결과 계산
+// 결과 계산 (HEAL 4분기 확장판)
 function calculateResult() {
   const answers = {};
   let countA = 0, countB = 0;
 
-  // Q1~Q8 수집
   for (let i = 1; i <= 8; i++) {
     const ans = localStorage.getItem(`Q${i}`);
     if (ans) {
@@ -22,61 +11,66 @@ function calculateResult() {
       if (ans === "B") countB++;
     }
   }
-
-  // 모든 문항 체크(선택)
   if (Object.keys(answers).length < 8) {
     alert("모든 문항에 응답해 주세요.");
     return;
   }
 
-  // 타입 결정
   let type = "";
   if (countA > countB) type = "HEAL";
   else if (countB > countA) type = "MEAN";
   else type = "MIX";
 
+  const q1 = answers.Q1, q2 = answers.Q2, q4 = answers.Q4, q5 = answers.Q5,
+        q6 = answers.Q6, q7 = answers.Q7, q8 = answers.Q8;
+
   let resultPage = "";
 
-  // ===== HEAL: 공중그네 vs 당신이 옳다 (편향 완화) =====
+  // ---------- HEAL (4개로 확장) ----------
   if (type === "HEAL") {
-    const healSignals =
-      (answers.Q1 === "A") + (answers.Q2 === "A") + (answers.Q5 === "A");
-    if (answers.Q8 === "A" && healSignals >= 2) {
-      resultPage = "result_heal_kangaroo.html";   // 공중그네
+    const healSignals = (q1 === "A") + (q2 === "A") + (q5 === "A"); // 위로/가벼움 신호
+
+    if (q8 === "A" && healSignals >= 2) {
+      // 경쾌 + (A성향 2+) → 공중그네
+      resultPage = "result_heal_kangaroo.html";
+    } else if (q4 === "B" && q6 === "A") {
+      // 여정 선호 + 쉬어가기 → 연금술사(온화한 여정)
+      resultPage = "result_mean_alchemist.html";
+    } else if (q8 === "B" && (q1 === "A" || q2 === "A")) {
+      // 서정 + 위로 성향 → 소네트집(시적 치유)
+      resultPage = "result_mean_sonnet.html";
     } else {
-      resultPage = "result_heal_yourmind.html";   // 당신이 옳다
+      // 기본: 관계적 공감 → 당신이 옳다
+      resultPage = "result_heal_yourmind.html";
     }
   }
 
-  // ===== MEAN: 우선순위 유지 =====
+  // ---------- MEAN (기존 우선순위 유지) ----------
   else if (type === "MEAN") {
-    const q1 = answers.Q1, q2 = answers.Q2, q4 = answers.Q4, q5 = answers.Q5,
-          q6 = answers.Q6, q7 = answers.Q7, q8 = answers.Q8;
-
     if (q7 === "B" && q8 === "B") {
-      resultPage = "result_mean_boy.html";              // 소년이 온다
+      resultPage = "result_mean_boy.html";                 // 소년이 온다
     } else if (q7 === "A" && q8 === "B") {
-      resultPage = "result_mean_moss.html";             // 이끼숲
+      resultPage = "result_mean_moss.html";                // 이끼숲
     } else if (q4 === "A" && q8 === "B") {
-      resultPage = "result_mean_sonnet.html";           // 소네트집
+      resultPage = "result_mean_sonnet.html";              // 소네트집
     } else if (q4 === "B" && q8 === "B") {
-      resultPage = "result_mean_nightflight.html";      // 야간비행
+      resultPage = "result_mean_nightflight.html";         // 야간비행
     } else if (q4 === "B" && q6 === "B") {
-      resultPage = "result_mean_alchemist.html";        // 연금술사
+      resultPage = "result_mean_alchemist.html";           // 연금술사
     } else if (q5 === "B") {
-      resultPage = "result_mean_kagan.html";            // 죽음이란 무엇인가
+      resultPage = "result_mean_kagan.html";               // 죽음이란 무엇인가
     } else if (q7 === "B") {
-      resultPage = "result_mean_frankl.html";           // 죽음의 수용소에서
+      resultPage = "result_mean_frankl.html";              // 죽음의 수용소에서
     } else {
-      resultPage = "result_mean_frankl.html";           // 기본값
+      resultPage = "result_mean_frankl.html";
     }
   }
 
-  // ===== MIX: HEAL-공중그네 조건을 동일하게 적용 =====
-  else if (type === "MIX") {
-    const q1 = answers.Q1, q2 = answers.Q2, q4 = answers.Q4, q5 = answers.Q5,
-          q6 = answers.Q6, q7 = answers.Q7, q8 = answers.Q8;
+  // ---------- MIX (HEAL 규칙 섞어서 분배) ----------
+  else {
+    const healSignals = (q1 === "A") + (q2 === "A") + (q5 === "A");
 
+    // MEAN 쪽 강한 패턴 먼저 소거
     if (q7 === "B" && q8 === "B") {
       resultPage = "result_mean_boy.html";
     } else if (q7 === "A" && q8 === "B") {
@@ -88,17 +82,18 @@ function calculateResult() {
     } else if (q4 === "B" && q6 === "B") {
       resultPage = "result_mean_alchemist.html";
     } else {
-      // HEAL스러운 혼합일 때만 공중그네, 아니면 '당신이 옳다'
-      const healSignals =
-        (q1 === "A") + (q2 === "A") + (q5 === "A");
+      // 남은 경우 HEAL 4분기로 배분
       if (q8 === "A" && healSignals >= 2) {
         resultPage = "result_heal_kangaroo.html";
+      } else if (q4 === "B" && q6 === "A") {
+        resultPage = "result_mean_alchemist.html";
+      } else if (q8 === "B" && (q1 === "A" || q2 === "A")) {
+        resultPage = "result_mean_sonnet.html";
       } else {
         resultPage = "result_heal_yourmind.html";
       }
     }
   }
 
-  // 이동
   window.location.href = `results/${resultPage}`;
 }
