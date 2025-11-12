@@ -245,41 +245,6 @@
 
   <script>
     const STORAGE_KEY = "comments_okuda";
-
-    function loadComments() {
-      const list = document.getElementById("commentList");
-      list.innerHTML = "";
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return;
-
-      const comments = JSON.parse(saved);
-      comments.forEach(comment => {
-        const div = document.createElement("div");
-        div.className = "comment-item";
-        div.innerHTML = `<p>${comment.text}</p><span>${comment.time}</span>`;
-        list.appendChild(div);
-      });
-    }
-
-    function addComment() {
-      const input = document.getElementById("commentInput");
-      const text = input.value.trim();
-      if (!text) return;
-
-      const comment = {
-        text,
-        time: new Date().toLocaleString()
-      };
-
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      saved.unshift(comment);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-
-      input.value = "";
-      loadComments();
-    }
-
-    window.onload = loadComments;
     function goHome() {
   window.location.href = "../index.html"; // 홈 경로. 필요시 수정 가능
 }
@@ -297,6 +262,7 @@ async function sharePage() {
   </script>
 </body>
 </html>
+
 
 
 
