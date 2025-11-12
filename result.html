@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>떠나는 중...</title>
+ <!-- ✅ Google Fonts: Hahmlet -->
+  <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+
+    .spinner {
+      margin-top: 30px;
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body onload="calculateResult()">
+  <h1>당신의 소녀에게 향하는 중입니다...</h1>
+  <p>잠시만 기다려주세요.</p>
+  <div class="spinner"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
