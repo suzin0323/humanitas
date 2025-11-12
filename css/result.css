@@ -45,7 +45,7 @@
   .comment-input input[name="fields[name]"],
   .comment-input textarea[name="fields[message]"],
   .comment-input button {
-    width: 100% !important;     /* ← 모바일에서 정렬 깨짐 해결 */
+    width: 90% !important;     /* ← 모바일에서 정렬 깨짐 해결 */
     max-width: 100%;
     box-sizing: border-box;
   }
@@ -54,4 +54,5 @@
     min-height: 110px;
   }
 }
+
 
