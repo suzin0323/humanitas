@@ -36,20 +36,21 @@
       <h3>💬 “당신에게 ‘목숨보다 값진 것’은 무엇인가?”</h3>
     </div>
 
-   <div class="comment-section">
+ <div class="comment-section">
   <h3>댓글 남기기</h3>
-  <form 
-    action="https://api.staticman.net/v3/entry/github/suzin0323/humanitas/main/comments?access_token=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"
-    method="POST">
-    <input type="hidden" name="options[slug]" value="nightflight">
-    <input type="hidden" name="options[redirect]" value="https://suzin0323.github.io/humanitas/results/result_mean_nightflight.html">
+
+  <form id="commentForm">
     <div class="comment-input">
-      <input type="text" name="fields[name]" placeholder="이름 (선택)">
-      <textarea name="fields[message]" placeholder="생각을 남겨보세요..." required></textarea>
+      <input type="text" id="commentName" name="name" placeholder="이름 (선택)">
+      <textarea id="commentMessage" name="message" placeholder="생각을 남겨보세요..." required></textarea>
       <button type="submit">등록</button>
     </div>
   </form>
+
+  <!-- 여기 아래에 댓글이 쌓임 -->
+  <div class="comment-list" id="commentList"></div>
 </div>
+
 
     <!-- ✅ 하단 버튼 -->
 <div class="footer-buttons">
@@ -62,6 +63,7 @@
 <script defer src="../js/common.js"></script>
 </body>
 </html>
+
 
 
 
