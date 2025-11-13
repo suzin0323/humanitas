@@ -16,7 +16,7 @@ async function sharePage(){
 // js/common.js
 
 // ① Google Apps Script Web App URL (네가 발급받은 주소로 교체)
-const SCRIPT_URL = 'https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbxqMXokTr2isatE-vb6YtT6oW9gmZf0BWvbZlsvPGu4hQonu3dBm7aoxhgwDPH7aHfZpw/exec/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/https://script.google.com/macros/library/d/1bHsV6t90GjHoMVjTf6wRCKIuB9xc62_wd5QA28o9jxfsCPUZEuqEre-H/2/exec/exec';
 
 // 간단한 HTML escape (XSS 방지)
 function escapeHtml(str) {
@@ -115,4 +115,5 @@ async function sharePage() {
     alert("복사 실패! 수동으로 복사해주세요.");
   }
 }
+
 
