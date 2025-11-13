@@ -244,3 +244,17 @@ body {
   background: #f1f1f1;
   transform: translateY(-2px);
 }
+/* ---------------------------------------------------------
+   iPad 전용 패치 (background-attachment: fixed 방지)
+   --------------------------------------------------------- */
+@supports (-webkit-touch-callout: none) {
+  body {
+    background-attachment: scroll !important;
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+
+  .container {
+    backdrop-filter: none !important;
+  }
+}
