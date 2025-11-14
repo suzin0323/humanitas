@@ -8,8 +8,8 @@
   <!-- Google Fonts: Hahmlet -->
   <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/result.css" />
-
+  <!-- 공통 결과 CSS -->
+  <link rel="stylesheet" href="../css/result.css" />
 </head>
 
 <body style="--bg: url('../images/youareok.jpg')">
@@ -41,30 +41,26 @@
     </div>
 
     <div class="comment-section">
-  <h3>댓글 남기기</h3>
+      <h3>댓글 남기기</h3>
 
-  <form id="commentForm">
-    <div class="comment-input">
-      <input type="text" id="commentName" name="name" placeholder="이름 (선택)">
-      <textarea id="commentMessage" name="message" placeholder="생각을 남겨보세요..." required></textarea>
-      <button type="submit">등록</button>
+      <form id="commentForm">
+        <div class="comment-input">
+          <input type="text" id="commentName" name="name" placeholder="이름 (선택)">
+          <textarea id="commentMessage" name="message" placeholder="생각을 남겨보세요..." required></textarea>
+          <button type="submit">등록</button>
+        </div>
+      </form>
+
+      <!-- 여기 아래에 댓글들이 렌더링 -->
+      <div class="comment-list" id="commentList"></div>
     </div>
-  </form>
-
-  <!-- 여기 아래에 댓글이 쌓임 -->
-  <div class="comment-list" id="commentList"></div>
-</div>
-
 
     <!-- ✅ 하단 버튼 -->
-<div class="footer-buttons">
-  <button onclick="goHome()">🏠 홈으로</button>
-  <button onclick="sharePage()">🔗 공유하기</button>
-</div>
-
+    <div class="footer-buttons">
+      <button onclick="goHome()">🏠 홈으로</button>
+      <button onclick="sharePage()">🔗 공유하기</button>
+    </div>
   </div>
-
-   <link rel="stylesheet" href="../css/result.css" />
 
   <!-- 페이지별 slug 설정 -->
   <script>
@@ -73,11 +69,3 @@
   <script defer src="../js/common.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
