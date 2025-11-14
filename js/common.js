@@ -17,7 +17,7 @@ async function sharePage() {
 
 // ---------- 댓글 공통 로직 ----------
 
-// ① Google Apps Script Web App URL (****** /exec 까지만 ******)
+// ① Apps Script Web App URL (배포 화면의 "웹 앱" URL 그대로, /exec 까지만)
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbxqMXokTr2isatE-vb6YtT6oW9gmZf0BWvbZlsvPGu4hQonu3dBm7aoxhgwDPH7aHfZpw/exec";
 
@@ -32,11 +32,8 @@ function escapeHtml(str) {
   }[s]));
 }
 
-/**
- * JSONP 방식으로 댓글 불러오기
- */
+// JSONP 방식으로 목록 불러오기
 function loadComments(SLUG, listEl) {
-  // 매 요청마다 콜백 이름을 유니크하게
   const cbName = "handleComments_" + SLUG + "_" + Date.now();
 
   window[cbName] = function (comments) {
@@ -51,23 +48,19 @@ function loadComments(SLUG, listEl) {
       `;
       listEl.appendChild(div);
     });
-
-    // 사용 후 정리
     delete window[cbName];
   };
 
   const script = document.createElement("script");
   script.src =
     `${SCRIPT_URL}?slug=${encodeURIComponent(SLUG)}&callback=${cbName}`;
-  script.onerror = () => {
-    console.error("JSONP load error");
+  script.onerror = (e) => {
+    console.error("JSONP load error", script.src, e);
   };
   document.body.appendChild(script);
 }
 
-/**
- * 댓글 제출 (POST, no-cors)
- */
+// 댓글 제출 (POST, no-cors)
 async function submitComment(e, SLUG, nameInput, msgInput, listEl) {
   e.preventDefault();
   const name = nameInput.value.trim();
@@ -80,7 +73,6 @@ async function submitComment(e, SLUG, nameInput, msgInput, listEl) {
   formData.append("message", message);
 
   try {
-    // no-cors: 응답 내용을 못 읽어도 되니까, CORS 체크를 피함
     await fetch(SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
@@ -88,8 +80,6 @@ async function submitComment(e, SLUG, nameInput, msgInput, listEl) {
     });
 
     msgInput.value = "";
-
-    // 저장됐다고 가정하고 다시 로드
     loadComments(SLUG, listEl);
   } catch (err) {
     console.error("submitComment error", err);
@@ -97,23 +87,22 @@ async function submitComment(e, SLUG, nameInput, msgInput, listEl) {
   }
 }
 
-// ---------- 페이지 로드 시 초기화 ----------
+// 페이지 로드 시 초기화
 document.addEventListener("DOMContentLoaded", () => {
   const cfg = window.COMMENT_CONFIG || {};
   const SLUG = cfg.slug;
-  if (!SLUG) return; // 댓글 없는 페이지면 패스
+  if (!SLUG) return;
 
-  const form = document.getElementById("commentForm");
+  const form      = document.getElementById("commentForm");
   const nameInput = document.getElementById("commentName");
-  const msgInput = document.getElementById("commentMessage");
-  const listEl = document.getElementById("commentList");
+  const msgInput  = document.getElementById("commentMessage");
+  const listEl    = document.getElementById("commentList");
 
   if (!form || !nameInput || !msgInput || !listEl) return;
 
-  form.addEventListener("submit", e =>
+  form.addEventListener("submit", (e) =>
     submitComment(e, SLUG, nameInput, msgInput, listEl)
   );
 
   loadComments(SLUG, listEl);
 });
-
